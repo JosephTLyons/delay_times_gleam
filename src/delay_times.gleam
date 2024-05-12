@@ -1,11 +1,3 @@
-import gleam/io
-
-pub fn main() {
-  new(120.0)
-  |> in_hz
-  |> normal
-}
-
 pub type DelayTimes {
   DelayTimes(
     v_whole: Float,

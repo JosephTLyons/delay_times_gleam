@@ -1,7 +1,6 @@
 import delay_times
 import gleam/float
 import gleam/io
-import gleam/list
 import gleeunit
 import gleeunit/should
 
@@ -9,29 +8,65 @@ pub fn main() {
   gleeunit.main()
 }
 
-pub fn delay_times_instances_are_equal_test(
+fn delay_times_instances_are_equal(
   expected_delay_times: delay_times.DelayTimes,
   actual_delay_times: delay_times.DelayTimes,
 ) {
-  let expected_and_actual_values = [
-    #(expected_delay_times.v_whole, actual_delay_times.v_whole),
-    #(expected_delay_times.v_half, actual_delay_times.v_half),
-    #(expected_delay_times.v_quarter, actual_delay_times.v_quarter),
-    #(expected_delay_times.v_8th, actual_delay_times.v_8th),
-    #(expected_delay_times.v_16th, actual_delay_times.v_16th),
-    #(expected_delay_times.v_32nd, actual_delay_times.v_32nd),
-    #(expected_delay_times.v_64th, actual_delay_times.v_64th),
-    #(expected_delay_times.v_128th, actual_delay_times.v_128th),
-  ]
+  compare_floats(
+    expected_delay_times.v_whole,
+    actual_delay_times.v_whole,
+    "v_whole",
+  )
 
-  expected_and_actual_values
-  |> list.each(fn(a) {
-    let error_message =
-      "Left: " <> float.to_string(a.0) <> ", Right: " <> float.to_string(a.1)
-    io.println(error_message)
-    float.loosely_equals(a.0, a.1, 0.0001)
-    |> should.be_true
-  })
+  compare_floats(
+    expected_delay_times.v_half,
+    actual_delay_times.v_half,
+    "v_half",
+  )
+
+  compare_floats(
+    expected_delay_times.v_quarter,
+    actual_delay_times.v_quarter,
+    "v_quarter",
+  )
+
+  compare_floats(expected_delay_times.v_8th, actual_delay_times.v_8th, "v_8th")
+
+  compare_floats(
+    expected_delay_times.v_16th,
+    actual_delay_times.v_16th,
+    "v_16th",
+  )
+
+  compare_floats(
+    expected_delay_times.v_32nd,
+    actual_delay_times.v_32nd,
+    "v_32nd",
+  )
+
+  compare_floats(
+    expected_delay_times.v_64th,
+    actual_delay_times.v_64th,
+    "v_64th",
+  )
+
+  compare_floats(
+    expected_delay_times.v_128th,
+    actual_delay_times.v_128th,
+    "v_128th",
+  )
+}
+
+fn compare_floats(expected: Float, got: Float, error_identifer: String) {
+  let error_message =
+    error_identifer
+    <> ": Expected: "
+    <> float.to_string(expected)
+    <> ", Got: "
+    <> float.to_string(got)
+  io.println(error_message)
+  float.loosely_equals(expected, got, 0.0001)
+  |> should.be_true
 }
 
 // ms tests (move to its own module?)
@@ -50,11 +85,9 @@ pub fn ms_normal_test() {
     )
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.normal()
-    |> delay_times.in_ms()
+    delay_times.new(120.0, delay_times.Normal, delay_times.Ms)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 pub fn ms_dotted_test() {
@@ -71,11 +104,9 @@ pub fn ms_dotted_test() {
     )
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.dotted()
-    |> delay_times.in_ms()
+    delay_times.new(120.0, delay_times.Dotted, delay_times.Ms)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 pub fn ms_triplet_test() {
@@ -92,11 +123,9 @@ pub fn ms_triplet_test() {
     )
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.triplet()
-    |> delay_times.in_ms()
+    delay_times.new(120.0, delay_times.Triplet, delay_times.Ms)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 // hz tests (move to its own module?)
@@ -106,11 +135,9 @@ pub fn hz_normal_test() {
     delay_times.DelayTimes(8.0, 4.0, 2.0, 1.0, 0.5, 0.25, 0.125, 0.0625)
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.normal()
-    |> delay_times.in_hz()
+    delay_times.new(120.0, delay_times.Normal, delay_times.Hz)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 pub fn hz_dotted_test() {
@@ -118,11 +145,9 @@ pub fn hz_dotted_test() {
     delay_times.DelayTimes(12.0, 6.0, 3.0, 1.5, 0.75, 0.375, 0.1875, 0.0937)
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.dotted()
-    |> delay_times.in_hz()
+    delay_times.new(120.0, delay_times.Dotted, delay_times.Hz)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 pub fn hz_triplet_test() {
@@ -139,11 +164,9 @@ pub fn hz_triplet_test() {
     )
 
   let actual_delay_times =
-    delay_times.new(120.0)
-    |> delay_times.triplet()
-    |> delay_times.in_hz()
+    delay_times.new(120.0, delay_times.Triplet, delay_times.Hz)
 
-  delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
 }
 
 // inteface tests (probably not necessary)
@@ -152,40 +175,7 @@ pub fn hz_triplet_test() {
 // They can't fail, but at least the code won't compile if something about the inferface changes
 
 pub fn single_shot_test() {
-  delay_times.new(120.0)
-  |> delay_times.normal()
-  |> delay_times.in_ms()
-
-  True
-  |> should.be_true
-}
-
-pub fn reusability_test() {
-  let dt = delay_times.new(120.0)
-
-  dt
-  |> delay_times.normal()
-  |> delay_times.in_ms()
-
-  dt
-  |> delay_times.dotted()
-  |> delay_times.in_ms()
-
-  dt
-  |> delay_times.triplet()
-  |> delay_times.in_ms()
-
-  dt
-  |> delay_times.normal()
-  |> delay_times.in_hz()
-
-  dt
-  |> delay_times.dotted()
-  |> delay_times.in_hz()
-
-  dt
-  |> delay_times.triplet()
-  |> delay_times.in_hz()
+  delay_times.new(120.0, delay_times.Normal, delay_times.Ms)
 
   True
   |> should.be_true

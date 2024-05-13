@@ -1,5 +1,6 @@
 import delay_times
 import gleam/float
+import gleam/io
 import gleam/list
 import gleeunit
 import gleeunit/should
@@ -25,6 +26,9 @@ pub fn delay_times_instances_are_equal_test(
 
   expected_and_actual_values
   |> list.each(fn(a) {
+    let error_message =
+      "Left: " <> float.to_string(a.0) <> ", Right: " <> float.to_string(a.1)
+    io.println(error_message)
     float.loosely_equals(a.0, a.1, 0.0001)
     |> should.be_true
   })

@@ -13,21 +13,18 @@ pub type DelayTimes {
   )
 }
 
-pub fn new(beats_per_minute: Float) -> DelayTimesPeriodicUnit {
-  DelayTimesPeriodicUnit(beats_per_minute)
+pub fn new(beats_per_minute: Float) -> DelayTimesNoteModifier {
+  DelayTimesNoteModifier(beats_per_minute)
 }
 
 pub opaque type DelayTimesNoteModifier {
-  DelayTimesNoteModifier(quarter_note_delay_value: Float)
+  DelayTimesNoteModifier(beats_per_minute: Float)
 }
 
 fn get_delay_times_instance(
-  delay_times_note_modifier: DelayTimesNoteModifier,
+  quarter_note_delay_value: Float,
   multiplier: Float,
 ) -> DelayTimes {
-  let quarter_note_delay_value =
-    delay_times_note_modifier.quarter_note_delay_value
-
   DelayTimes(
     v_whole: { quarter_note_delay_value *. 4.0 } *. multiplier,
     v_half: { quarter_note_delay_value *. 2.0 } *. multiplier,
@@ -40,28 +37,39 @@ fn get_delay_times_instance(
   )
 }
 
-pub fn normal(delay_times_note_modifier: DelayTimesNoteModifier) -> DelayTimes {
-  get_delay_times_instance(delay_times_note_modifier, 1.0)
+pub fn normal(
+  delay_times_note_modifier: DelayTimesNoteModifier,
+) -> DelayTimesPeriodicUnit {
+  DelayTimesPeriodicUnit(delay_times_note_modifier, 1.0)
 }
 
-pub fn dotted(delay_times_note_modifier: DelayTimesNoteModifier) -> DelayTimes {
-  get_delay_times_instance(delay_times_note_modifier, 1.5)
+pub fn dotted(
+  delay_times_note_modifier: DelayTimesNoteModifier,
+) -> DelayTimesPeriodicUnit {
+  DelayTimesPeriodicUnit(delay_times_note_modifier, 1.5)
 }
 
-pub fn triplet(delay_times_note_modifier: DelayTimesNoteModifier) -> DelayTimes {
-  get_delay_times_instance(delay_times_note_modifier, 2.0 /. 3.0)
+pub fn triplet(
+  delay_times_note_modifier: DelayTimesNoteModifier,
+) -> DelayTimesPeriodicUnit {
+  DelayTimesPeriodicUnit(delay_times_note_modifier, 2.0 /. 3.0)
 }
 
 pub opaque type DelayTimesPeriodicUnit {
-  DelayTimesPeriodicUnit(beats_per_minute: Float)
+  DelayTimesPeriodicUnit(
+    delay_times_note_modifier: DelayTimesNoteModifier,
+    multiplier: Float,
+  )
 }
 
-pub fn in_ms(unit: DelayTimesPeriodicUnit) -> DelayTimesNoteModifier {
-  let quarter_note_in_ms: Float = 60_000.0 /. unit.beats_per_minute
-  DelayTimesNoteModifier(quarter_note_in_ms)
+pub fn in_ms(unit: DelayTimesPeriodicUnit) -> DelayTimes {
+  let quarter_note_in_ms: Float =
+    60_000.0 /. unit.delay_times_note_modifier.beats_per_minute
+  get_delay_times_instance(quarter_note_in_ms, unit.multiplier)
 }
 
-pub fn in_hz(unit: DelayTimesPeriodicUnit) -> DelayTimesNoteModifier {
-  let quarter_note_in_hz: Float = unit.beats_per_minute /. 60.0
-  DelayTimesNoteModifier(quarter_note_in_hz)
+pub fn in_hz(unit: DelayTimesPeriodicUnit) -> DelayTimes {
+  let quarter_note_in_hz: Float =
+    unit.delay_times_note_modifier.beats_per_minute /. 60.0
+  get_delay_times_instance(quarter_note_in_hz, unit.multiplier)
 }

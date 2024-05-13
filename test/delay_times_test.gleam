@@ -51,8 +51,8 @@ pub fn ms_normal_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_ms()
     |> delay_times.normal()
+    |> delay_times.in_ms()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -72,8 +72,8 @@ pub fn ms_dotted_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_ms()
     |> delay_times.dotted()
+    |> delay_times.in_ms()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -93,8 +93,8 @@ pub fn ms_triplet_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_ms()
     |> delay_times.triplet()
+    |> delay_times.in_ms()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -107,8 +107,8 @@ pub fn hz_normal_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_hz()
     |> delay_times.normal()
+    |> delay_times.in_hz()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -119,8 +119,8 @@ pub fn hz_dotted_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_hz()
     |> delay_times.dotted()
+    |> delay_times.in_hz()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -140,8 +140,8 @@ pub fn hz_triplet_test() {
 
   let actual_delay_times =
     delay_times.new(120.0)
-    |> delay_times.in_hz()
     |> delay_times.triplet()
+    |> delay_times.in_hz()
 
   delay_times_instances_are_equal_test(expected_delay_times, actual_delay_times)
 }
@@ -153,8 +153,8 @@ pub fn hz_triplet_test() {
 
 pub fn single_shot_test() {
   delay_times.new(120.0)
-  |> delay_times.in_ms()
   |> delay_times.normal()
+  |> delay_times.in_ms()
 
   True
   |> should.be_true
@@ -164,28 +164,28 @@ pub fn reusability_test() {
   let dt = delay_times.new(120.0)
 
   dt
-  |> delay_times.in_ms()
   |> delay_times.normal()
+  |> delay_times.in_ms()
 
   dt
-  |> delay_times.in_ms()
   |> delay_times.dotted()
-
-  dt
   |> delay_times.in_ms()
-  |> delay_times.triplet()
 
   dt
-  |> delay_times.in_hz()
+  |> delay_times.triplet()
+  |> delay_times.in_ms()
+
+  dt
   |> delay_times.normal()
+  |> delay_times.in_hz()
 
   dt
-  |> delay_times.in_hz()
   |> delay_times.dotted()
+  |> delay_times.in_hz()
 
   dt
-  |> delay_times.in_hz()
   |> delay_times.triplet()
+  |> delay_times.in_hz()
 
   True
   |> should.be_true

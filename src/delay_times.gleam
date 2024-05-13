@@ -1,3 +1,5 @@
+// TODO: Change order of composition to: new(120) |> triplet |> in_ms
+// TODO: Make private, but testable
 pub type DelayTimes {
   DelayTimes(
     v_whole: Float,

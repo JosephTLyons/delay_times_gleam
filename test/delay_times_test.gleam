@@ -7,56 +7,56 @@ pub fn main() {
 }
 
 fn delay_times_instances_are_equal(
-  expected_delay_times: delay_times.DelayTimes,
   actual_delay_times: delay_times.DelayTimes,
+  expected_delay_times: delay_times.DelayTimes,
 ) {
   let tolerance = 0.0001
 
   expect.to_loosely_equal(
-    expected_delay_times.v_whole,
     actual_delay_times.v_whole,
+    expected_delay_times.v_whole,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_half,
     actual_delay_times.v_half,
+    expected_delay_times.v_half,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_quarter,
     actual_delay_times.v_quarter,
+    expected_delay_times.v_quarter,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_8th,
     actual_delay_times.v_8th,
+    expected_delay_times.v_8th,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_16th,
     actual_delay_times.v_16th,
+    expected_delay_times.v_16th,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_32nd,
     actual_delay_times.v_32nd,
+    expected_delay_times.v_32nd,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_64th,
     actual_delay_times.v_64th,
+    expected_delay_times.v_64th,
     tolerance,
   )
 
   expect.to_loosely_equal(
-    expected_delay_times.v_128th,
     actual_delay_times.v_128th,
+    expected_delay_times.v_128th,
     tolerance,
   )
 }
@@ -64,6 +64,9 @@ fn delay_times_instances_are_equal(
 // ms tests (move to its own module?)
 
 pub fn ms_normal_test() {
+  let actual_delay_times =
+    delay_times.new(120.0, delay_times.Normal, delay_times.Ms)
+
   let expected_delay_times =
     delay_times.DelayTimes(
       2000.0,
@@ -76,13 +79,13 @@ pub fn ms_normal_test() {
       15.625,
     )
 
-  let actual_delay_times =
-    delay_times.new(120.0, delay_times.Normal, delay_times.Ms)
-
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }
 
 pub fn ms_dotted_test() {
+  let actual_delay_times =
+    delay_times.new(120.0, delay_times.Dotted, delay_times.Ms)
+
   let expected_delay_times =
     delay_times.DelayTimes(
       3000.0,
@@ -95,13 +98,13 @@ pub fn ms_dotted_test() {
       23.4375,
     )
 
-  let actual_delay_times =
-    delay_times.new(120.0, delay_times.Dotted, delay_times.Ms)
-
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }
 
 pub fn ms_triplet_test() {
+  let actual_delay_times =
+    delay_times.new(120.0, delay_times.Triplet, delay_times.Ms)
+
   let expected_delay_times =
     delay_times.DelayTimes(
       1333.3333,
@@ -114,35 +117,35 @@ pub fn ms_triplet_test() {
       10.4166,
     )
 
-  let actual_delay_times =
-    delay_times.new(120.0, delay_times.Triplet, delay_times.Ms)
-
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }
 
 // hz tests (move to its own module?)
 
 pub fn hz_normal_test() {
-  let expected_delay_times =
-    delay_times.DelayTimes(8.0, 4.0, 2.0, 1.0, 0.5, 0.25, 0.125, 0.0625)
-
   let actual_delay_times =
     delay_times.new(120.0, delay_times.Normal, delay_times.Hz)
 
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  let expected_delay_times =
+    delay_times.DelayTimes(8.0, 4.0, 2.0, 1.0, 0.5, 0.25, 0.125, 0.0625)
+
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }
 
 pub fn hz_dotted_test() {
-  let expected_delay_times =
-    delay_times.DelayTimes(12.0, 6.0, 3.0, 1.5, 0.75, 0.375, 0.1875, 0.0937)
-
   let actual_delay_times =
     delay_times.new(120.0, delay_times.Dotted, delay_times.Hz)
 
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  let expected_delay_times =
+    delay_times.DelayTimes(12.0, 6.0, 3.0, 1.5, 0.75, 0.375, 0.1875, 0.0937)
+
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }
 
 pub fn hz_triplet_test() {
+  let actual_delay_times =
+    delay_times.new(120.0, delay_times.Triplet, delay_times.Hz)
+
   let expected_delay_times =
     delay_times.DelayTimes(
       5.3333,
@@ -155,8 +158,5 @@ pub fn hz_triplet_test() {
       0.0416,
     )
 
-  let actual_delay_times =
-    delay_times.new(120.0, delay_times.Triplet, delay_times.Hz)
-
-  delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
+  delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
 }

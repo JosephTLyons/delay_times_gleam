@@ -42,7 +42,7 @@ pub fn new(
   DelayTimes(
     v_whole: { quarter_note_delay_value *. 4.0 } *. multiplier,
     v_half: { quarter_note_delay_value *. 2.0 } *. multiplier,
-    v_quarter: { quarter_note_delay_value } *. multiplier,
+    v_quarter: quarter_note_delay_value *. multiplier,
     v_8th: { quarter_note_delay_value /. 2.0 } *. multiplier,
     v_16th: { quarter_note_delay_value /. 4.0 } *. multiplier,
     v_32nd: { quarter_note_delay_value /. 8.0 } *. multiplier,

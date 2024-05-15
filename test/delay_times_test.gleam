@@ -1,72 +1,64 @@
 import delay_times
-import gleam/float
-import gleam/io
-import gleeunit
-import gleeunit/should
+import startest
+import startest/expect
 
 pub fn main() {
-  gleeunit.main()
+  startest.run(startest.default_config())
 }
 
 fn delay_times_instances_are_equal(
   expected_delay_times: delay_times.DelayTimes,
   actual_delay_times: delay_times.DelayTimes,
 ) {
-  compare_floats(
+  let tolerance = 0.0001
+
+  expect.to_loosely_equal(
     expected_delay_times.v_whole,
     actual_delay_times.v_whole,
-    "v_whole",
+    tolerance,
   )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_half,
     actual_delay_times.v_half,
-    "v_half",
+    tolerance,
   )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_quarter,
     actual_delay_times.v_quarter,
-    "v_quarter",
+    tolerance,
   )
 
-  compare_floats(expected_delay_times.v_8th, actual_delay_times.v_8th, "v_8th")
+  expect.to_loosely_equal(
+    expected_delay_times.v_8th,
+    actual_delay_times.v_8th,
+    tolerance,
+  )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_16th,
     actual_delay_times.v_16th,
-    "v_16th",
+    tolerance,
   )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_32nd,
     actual_delay_times.v_32nd,
-    "v_32nd",
+    tolerance,
   )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_64th,
     actual_delay_times.v_64th,
-    "v_64th",
+    tolerance,
   )
 
-  compare_floats(
+  expect.to_loosely_equal(
     expected_delay_times.v_128th,
     actual_delay_times.v_128th,
-    "v_128th",
+    tolerance,
   )
-}
-
-fn compare_floats(expected: Float, got: Float, error_identifer: String) {
-  let error_message =
-    error_identifer
-    <> ": Expected: "
-    <> float.to_string(expected)
-    <> ", Got: "
-    <> float.to_string(got)
-  io.println(error_message)
-  float.loosely_equals(expected, got, 0.0001)
-  |> should.be_true
 }
 
 // ms tests (move to its own module?)
@@ -167,16 +159,4 @@ pub fn hz_triplet_test() {
     delay_times.new(120.0, delay_times.Triplet, delay_times.Hz)
 
   delay_times_instances_are_equal(expected_delay_times, actual_delay_times)
-}
-
-// inteface tests (probably not necessary)
-
-// Here are a couple of weird tests that just ensure we don't break the interface
-// They can't fail, but at least the code won't compile if something about the inferface changes
-
-pub fn single_shot_test() {
-  delay_times.new(120.0, delay_times.Normal, delay_times.Ms)
-
-  True
-  |> should.be_true
 }

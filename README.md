@@ -8,18 +8,10 @@ gleam add delay_times
 ```
 ```gleam
 import delay_times
+import gleam/io
 
 pub fn main() {
-  // TODO: An example of the project in use
+  delay_times.new(120.0, delay_times.Normal, delay_times.Ms) |> io.debug
+  // DelayTimes(2.0e3, 1.0e3, 500.0, 250.0, 125.0, 62.5, 31.25, 15.625)
 }
-```
-
-Further documentation can be found at <https://hexdocs.pm/delay_times>.
-
-## Development
-
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
 ```

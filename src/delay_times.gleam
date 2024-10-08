@@ -1,4 +1,4 @@
-// TODO: Make private, but testable
+@internal
 pub type DelayTimes {
   DelayTimes(
     v_whole: Float,

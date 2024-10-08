@@ -12,17 +12,20 @@ pub type DelayTimes {
   )
 }
 
+/// The note modifier.
 pub type NoteModifier {
   Normal
   Dotted
   Triplet
 }
 
+/// The unit of the delay times.
 pub type Unit {
   Ms
   Hz
 }
 
+/// Constructs a new `DelayTimes` struct.
 pub fn new(
   beats_per_minute: Float,
   modifier: NoteModifier,

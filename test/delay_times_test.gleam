@@ -180,8 +180,8 @@ pub fn to_list_test() {
 
   actual_delay_times_list
   |> list.zip(expected_delay_times_list)
-  |> list.each(fn(a) {
-    let #(actual_delay_time, expected_delay_time) = a
+  |> list.each(fn(pair) {
+    let #(actual_delay_time, expected_delay_time) = pair
     expect.to_equal(actual_delay_time.0, expected_delay_time.0)
     expect.to_loosely_equal(actual_delay_time.1, expected_delay_time.1, 0.0001)
   })

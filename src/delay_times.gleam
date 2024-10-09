@@ -1,4 +1,3 @@
-@internal
 pub type DelayTimes {
   DelayTimes(
     v_whole: Float,

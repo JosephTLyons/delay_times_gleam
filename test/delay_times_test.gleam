@@ -1,4 +1,5 @@
 import delay_times
+import gleam/list
 import startest
 import startest/expect
 
@@ -159,4 +160,29 @@ pub fn hz_triplet_test() {
     )
 
   delay_times_instances_are_equal(actual_delay_times, expected_delay_times)
+}
+
+// to_list tests (move to its own module?)
+
+pub fn to_list_test() {
+  let delay_times = delay_times.new(120.0, delay_times.Triplet, delay_times.Hz)
+  let actual_delay_times_list = delay_times |> delay_times.to_list
+  let expected_delay_times_list = [
+    #("v_whole", 5.3333),
+    #("v_half", 2.6666),
+    #("v_quarter", 1.3333),
+    #("v_8th", 0.6666),
+    #("v_16th", 0.3333),
+    #("v_32nd", 0.1666),
+    #("v_64th", 0.0833),
+    #("v_128th", 0.0416),
+  ]
+
+  actual_delay_times_list
+  |> list.zip(expected_delay_times_list)
+  |> list.each(fn(a) {
+    let #(actual_delay_time, expected_delay_time) = a
+    expect.to_equal(actual_delay_time.0, expected_delay_time.0)
+    expect.to_loosely_equal(actual_delay_time.1, expected_delay_time.1, 0.0001)
+  })
 }

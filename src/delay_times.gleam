@@ -52,3 +52,17 @@ pub fn new(
     v_128th: { quarter_note_delay_value /. 32.0 } *. multiplier,
   )
 }
+
+/// Converts a `DelayTimes` struct to a list of name-value tuples.
+pub fn to_list(delay_times: DelayTimes) -> List(#(String, Float)) {
+  [
+    #("v_whole", delay_times.v_whole),
+    #("v_half", delay_times.v_half),
+    #("v_quarter", delay_times.v_quarter),
+    #("v_8th", delay_times.v_8th),
+    #("v_16th", delay_times.v_16th),
+    #("v_32nd", delay_times.v_32nd),
+    #("v_64th", delay_times.v_64th),
+    #("v_128th", delay_times.v_128th),
+  ]
+}

@@ -1,10 +1,10 @@
 import delay_times
+import gleam/float
 import gleam/list
-import startest
-import startest/expect
+import gleeunit
 
 pub fn main() {
-  startest.run(startest.default_config())
+  gleeunit.main()
 }
 
 fn delay_times_instances_are_equal(
@@ -13,49 +13,49 @@ fn delay_times_instances_are_equal(
 ) {
   let tolerance = 0.0001
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_whole,
     expected_delay_times.v_whole,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_half,
     expected_delay_times.v_half,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_quarter,
     expected_delay_times.v_quarter,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_8th,
     expected_delay_times.v_8th,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_16th,
     expected_delay_times.v_16th,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_32nd,
     expected_delay_times.v_32nd,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_64th,
     expected_delay_times.v_64th,
     tolerance,
   )
 
-  expect.to_loosely_equal(
+  assert float.loosely_equals(
     actual_delay_times.v_128th,
     expected_delay_times.v_128th,
     tolerance,
@@ -182,7 +182,11 @@ pub fn to_list_test() {
   |> list.zip(expected_delay_times_list)
   |> list.each(fn(pair) {
     let #(actual_delay_time, expected_delay_time) = pair
-    expect.to_equal(actual_delay_time.0, expected_delay_time.0)
-    expect.to_loosely_equal(actual_delay_time.1, expected_delay_time.1, 0.0001)
+    assert actual_delay_time.0 == expected_delay_time.0
+    assert float.loosely_equals(
+      actual_delay_time.1,
+      expected_delay_time.1,
+      0.0001,
+    )
   })
 }
